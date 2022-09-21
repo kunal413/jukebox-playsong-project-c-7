@@ -1,4 +1,4 @@
-package data.main;
+package DAO;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -20,8 +20,8 @@ public class ListenMusic {
     Clip clip;
 
     public int songPlayFunction(Connection con, int id) throws UnsupportedAudioFileException, IOException, LineUnavailableException, SQLException, ClassNotFoundException {
-
         Scanner scan = new Scanner(System.in);
+
         if (repeat == 0) {
             System.out.println("enter the song Id to play the song");
 
@@ -43,6 +43,7 @@ public class ListenMusic {
         clip = AudioSystem.getClip();
         clip.open(audiostream);
         clip.start();
+
         String response = "";
         long duration = clip.getMicrosecondLength();
         duration = clip.getMicrosecondLength();
@@ -133,24 +134,19 @@ public class ListenMusic {
                 System.out.println("enter the Song name. to play");
                 songName = scan.nextLine();
             }
-
             String query = "select Song_path from song where Song_name = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, songName);
             ResultSet rs = ps.executeQuery();
-            String episode_path = "";
+            String song1_path = "";
             while (rs.next()) {
-                episode_path = rs.getString(1);
-
+                song1_path = rs.getString(1);
             }
-
-
-            File file = new File(episode_path);
+            File file = new File(song1_path);
             AudioInputStream audiostream = AudioSystem.getAudioInputStream(file);
             Clip clip = AudioSystem.getClip();
             clip.open(audiostream);
             clip.start();
-
             String response = "";
             long duration = clip.getMicrosecondLength();
             duration = clip.getMicrosecondLength();
